@@ -15,16 +15,13 @@ const app = express();
 app.use(bodypasrser.json());
 app.use(bodypasrser.urlencoded({ extended: true }));
 
-//Setting views directory
-app.set("views", path.join(__dirname, '/views'));
-
 //Static Folder
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(path.join(__dirname, '/upload')));
 
 //End Points
-app.use('/signup', require('./routes/api/user')); 
-app.use('/user', require('./routes/api/auth'));
-
+app.use('/signup', require('./routes/api/user')); // Signup Route
+app.use('/user', require('./routes/api/auth')); // Login Route
+app.use('/products', require('./routes/api/product')); // Product Routes
 
 app.listen(process.env.PORT || 8000, () => {
     console.log("Server started at port 8000");

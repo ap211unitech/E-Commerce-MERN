@@ -11,7 +11,7 @@ const { check, validationResult } = require('express-validator');
 //@access   Private
 router.get("/", auth, async (req, res) => {
     try {
-        const user = await User.findOne({ _id: req.user.id }).select('-password');
+        const user = await User.findOne({ _id: req.user._id }).select('-password');
         return res.status(200).json(user);
     } catch (err) {
         return res.status(500).json({ errors: [{ msg: 'Internal Server Error' }] });
@@ -21,7 +21,7 @@ router.get("/", auth, async (req, res) => {
 //@Route    POST /user/login
 //@desc     Login User
 //@access   Public
-router.post("/", [
+router.post("/login", [
     check('email', 'Email must be valid').isEmail(),
     check('password', 'Password may not be empty').exists()
 ], async (req, res) => {
@@ -42,11 +42,7 @@ router.post("/", [
             return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
         }
         //Creating Token
-        const payload = {
-            user: {
-                id: user._id
-            }
-        }
+        const payload = { user };
         jwt.sign(payload, config.get('JWT-Secret'), { expiresIn: '3600s' }, (err, token) => {
             if (err) throw err;
             return res.status(200).json({ token });
