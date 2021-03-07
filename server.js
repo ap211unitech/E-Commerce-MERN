@@ -22,6 +22,7 @@ app.use(express.static(path.join(__dirname, '/upload')));
 app.use('/signup', require('./routes/api/user')); // Signup Route
 app.use('/user', require('./routes/api/auth')); // Login Route
 app.use('/products', require('./routes/api/product')); // Product Routes
+app.use('/orders', require('./routes/api/order')); // Order Routes
 
 app.listen(process.env.PORT || 8000, () => {
     console.log("Server started at port 8000");
