@@ -38,7 +38,7 @@ router.get("/get/:id", auth, async (req, res) => {
 
 //@Route    POST /products/create
 //@desc     Create a Product
-//@access   Private
+//@access   Private/ADMIN
 router.post("/create", auth, async (req, res) => {
     const user = req.user;
     if (user.type === "admin") {
@@ -64,13 +64,13 @@ router.post("/create", auth, async (req, res) => {
         });
     }
     else {
-        return res.status(400).json({ errors: [{ msg: 'Not Authorised' }] });
+        return res.status(401).json({ errors: [{ msg: 'Not Authorised' }] });
     }
 })
 
 //@Route    PATCH /products/update/:id
 //@desc     Update a Product
-//@access   Private
+//@access   Private/ADMIN
 router.patch("/update/:id", auth, async (req, res) => {
     const user = req.user;
     if (user.type === "admin") {
@@ -111,7 +111,7 @@ router.patch("/update/:id", auth, async (req, res) => {
 
 //@Route    DELETE /products/delete/:id
 //@desc     Delete a Product
-//@access   Private
+//@access   Private/ADMIN
 router.delete("/delete/:id", auth, async (req, res) => {
     const user = req.user;
     if (user.type === "admin") {
