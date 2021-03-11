@@ -180,4 +180,17 @@ router.put("/review/:id", [
         return res.status(500).json({ errors: [{ msg: 'Internal Server Error' }] });
     }
 })
+
+//@Route    GET /products/toprated
+//@desc     Giving Top Rated Product
+//@access   Public
+router.get('/toprated', auth, async (req, res) => {
+    try {
+        const products = await Product.find().sort({ rating: -1 }).limit(3);
+        return res.status(200).json(products);
+    } catch (err) {
+        return res.status(500).json({ errors: [{ msg: 'Internal Server Error' }] });
+    }
+})
+
 module.exports = router;
