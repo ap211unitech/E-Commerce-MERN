@@ -96,9 +96,9 @@ router.get('/:id/pay', auth, async (req, res) => {
 })
 
 // @desc    Update order to delivered
-// @route   GET /orders/:id/deliver
+// @route   PUT /orders/:id/deliver
 // @access  Private/ADMIN
-router.get('/:id/deliver', auth, async (req, res) => {
+router.put('/:id/deliver', auth, async (req, res) => {
     if (req.user.type === "admin") {
         try {
             const order = await Order.findById(req.params.id);

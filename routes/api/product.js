@@ -7,7 +7,7 @@ const { check, validationResult } = require('express-validator');
 //@Route    GET /products/get
 //@desc     Get All Products
 //@access   Public
-router.get("/get", auth, async (req, res) => {
+router.get("/get", async (req, res) => {
     try {
         const products = await Product.find();
         return res.status(200).json(products);
@@ -19,7 +19,7 @@ router.get("/get", auth, async (req, res) => {
 //@Route    GET /products/get/:id
 //@desc     Get A Product By ID
 //@access   Public
-router.get("/get/:id", auth, async (req, res) => {
+router.get("/get/:id", async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
         if (product) {
@@ -167,7 +167,7 @@ router.put("/review/:id", [
                 return res.status(200).json({ msg: 'Review added' });
             }
             else {
-                return res.status(404).json({ errors: [{ msg: 'Product Already Reviewed' }] });
+                return res.status(400).json({ errors: [{ msg: 'Product Already Reviewed' }] });
             }
         }
         else {
@@ -184,7 +184,7 @@ router.put("/review/:id", [
 //@Route    GET /products/toprated
 //@desc     Giving Top Rated Product
 //@access   Public
-router.get('/toprated', auth, async (req, res) => {
+router.get('/toprated', async (req, res) => {
     try {
         const products = await Product.find().sort({ rating: -1 }).limit(3);
         return res.status(200).json(products);

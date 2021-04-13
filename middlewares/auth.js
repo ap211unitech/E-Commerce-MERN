@@ -6,7 +6,7 @@ const auth = (req, res, next) => {
 
     //Check if token is not avaliable
     if (!token) {
-        return res.status(401).json({ errros: [{ msg: 'Authorization Denied' }] })
+        return res.status(401).json({ errros: [{ msg: 'Not Authorised' }] })
     }
 
     //Verify token
