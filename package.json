@@ -4,13 +4,17 @@
   "description": "This is a Full Stack Dynamic Website made with Node, Express and MongoDB , Multi Page Website",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Arjun Porwal",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "concurrently": "^6.0.0",
     "config": "^3.3.4",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

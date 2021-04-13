@@ -18,6 +18,37 @@ router.get("/", auth, async (req, res) => {
     }
 })
 
+//@Route    PUT /user
+//@desc     UPDATE Current User Data
+//@access   Private
+router.put("/", auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id)
+        if (user) {
+            user.name = req.body.name || user.name
+            user.email = req.body.email || user.email
+            if (req.body.password) {
+                user.password = req.body.password
+            }
+
+            const updatedUser = await user.save()
+
+            return res.status(200).json({
+                _id: updatedUser._id,
+                name: updatedUser.name,
+                email: updatedUser.email,
+                isAdmin: updatedUser.isAdmin,
+            });
+        }
+        else {
+            return res.status(400).json({ errors: [{ msg: 'User Not Found' }] });
+        }
+    } catch (err) {
+        return res.status(500).json({ errors: [{ msg: 'Internal Server Error' }] });
+    }
+})
+
+
 //@Route    POST /user/login
 //@desc     Login User
 //@access   Public
